@@ -1,0 +1,4 @@
+﻿  main.c
+C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Bidirectional_Priority_Queue\Bidirectional_Priority_Queue\main.c(30,7): warning C4013: niezdefiniowany "free"; przy założeniu, że extern zwraca int
+C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Bidirectional_Priority_Queue\Bidirectional_Priority_Queue\main.c(127,45): warning C4013: niezdefiniowany "malloc"; przy założeniu, że extern zwraca int
+  Bidirectional_Priority_Queue.vcxproj -> C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Bidirectional_Priority_Queue\Debug\Bidirectional_Priority_Queue.exe
