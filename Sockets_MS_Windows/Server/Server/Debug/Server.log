@@ -1,0 +1,4 @@
+﻿  main.c
+C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Sockets_MS_Windows\Server\Server\main.c(34,4): warning C4033: "thread_function" musi zwracać wartość
+C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Sockets_MS_Windows\Server\Server\main.c(71): warning C4716: "thread_function": musi zwracać wartość
+  Server.vcxproj -> C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Sockets_MS_Windows\Server\Debug\Server.exe

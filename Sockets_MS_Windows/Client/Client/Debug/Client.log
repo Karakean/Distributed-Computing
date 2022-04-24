@@ -1,0 +1,4 @@
+﻿  main.c
+C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Sockets_MS_Windows\Client\Client\main.c(31,4): warning C4033: "receive_message" musi zwracać wartość
+C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Sockets_MS_Windows\Client\Client\main.c(37): warning C4715: "receive_message”: niewszystkie ścieżki kodu zwracają wartość
+  Client.vcxproj -> C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Sockets_MS_Windows\Client\Debug\Client.exe
