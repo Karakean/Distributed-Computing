@@ -1,5 +1,0 @@
-﻿  main.c
-C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Multithreading_in_MS_Windows\Multithreading_in_MS_Windows\main.c(11,10): warning C4068: nieznana pragma „argsused”
-C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Multithreading_in_MS_Windows\Multithreading_in_MS_Windows\main.c(70,23): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Multithreading_in_MS_Windows\Multithreading_in_MS_Windows\main.c(37): warning C4716: "thread_function": musi zwracać wartość
-  Multithreading_in_MS_Windows.vcxproj -> C:\Users\mipig\Desktop\Dawid Lipiec\pg\IV sem\PR\Multithreading_in_MS_Windows\Debug\Multithreading_in_MS_Windows.exe
