@@ -8,97 +8,92 @@ import java.util.Map;
 
 public class Warehouse extends Thread {
     private int MAX_CAPACITY = 100;
-    private Map<Integer, Integer> warehouse;
-    private int amount_in_store;
+    private Map<String, Integer> warehouse = new HashMap<>();
+    private int amount_in_store = 0;
+    private final Object lock;
+
+    Warehouse(Object lock){
+        this.lock = lock;
+    }
 
     @Override
     public void run() {
         System.out.println("Warehouse is opened.");
     }
 
-    Warehouse() {
-        this.warehouse = new HashMap<>();
-        this.amount_in_store = 0;
-    }
-
-    synchronized int receiveProducts(int productID, int received_amount) {
-        String product="";
-        switch (productID) {
-            case 0 -> product = "flour";
-            case 1 -> product = "olive oil";
-            default -> product = "tomatoes";
-        }
+    synchronized int receiveProducts(String product, int received_amount) {
         if (this.amount_in_store + received_amount <= this.MAX_CAPACITY) {
             this.amount_in_store += received_amount;
             int new_amount = received_amount;
-            if (this.warehouse.containsKey(productID)) {
-                new_amount += this.warehouse.get(productID);
-                this.warehouse.remove(productID);
+            if (this.warehouse.containsKey(product)) {
+                new_amount += this.warehouse.get(product);
+                this.warehouse.remove(product);
             }
-            this.warehouse.put(productID, new_amount);
-            printStore();
-            System.out.println(received_amount + " pieces of " + product + " has been added to warehouse.");
+            this.warehouse.put(product, new_amount);
+            //printWarehouse();
+            //System.out.println(received_amount + " pieces of " + product + " has been added to warehouse.");
+            synchronized (lock){
+                lock.notifyAll();
+            }
             return received_amount;
         } else if (this.amount_in_store != this.MAX_CAPACITY) {
             int amount = this.MAX_CAPACITY - this.amount_in_store;
             this.amount_in_store = this.MAX_CAPACITY;
             int new_amount = amount;
-            if (this.warehouse.containsKey(productID)) {
-                new_amount += this.warehouse.get(productID);
-                this.warehouse.remove(productID);
+            if (this.warehouse.containsKey(product)) {
+                new_amount += this.warehouse.get(product);
+                this.warehouse.remove(product);
             }
-            this.warehouse.put(productID, new_amount);
-            System.out.println("Only " + amount + " out of " + received_amount + " pieces of " + product +
-                    " has been added to warehouse due to lack of space.");
-            printStore();
+            this.warehouse.put(product, new_amount);
+            //System.out.println("Only " + amount + " out of " + received_amount + " pieces of " + product +
+            //        " has been added to warehouse due to lack of space.");
+            //printWarehouse();
+            synchronized (lock){
+                lock.notifyAll();
+            }
             return amount;
         } else {
-            System.out.println("Warehouse is full.");
+            //System.out.println("Warehouse is full.");
             return 0;
         }
     }
 
-    private void printStore() {
+    private void printWarehouse() {
         System.out.println("There is " + this.amount_in_store + " products in the warehouse: ");
         String product = "";
-        for (Map.Entry<Integer, Integer> entry : this.warehouse.entrySet()) {
-            switch (entry.getKey()) {
-                case 0 -> product = "flour";
-                case 1 -> product = "olive oil";
-                default -> product = "tomatoes";
-            }
-            System.out.println(product+": "+entry.getValue());
+        for (Map.Entry<String, Integer> entry : this.warehouse.entrySet()) {
+            System.out.println(entry.getKey()+": "+entry.getValue());
         }
     }
 
-    synchronized int sellProducts(int productID, int amount) {
-        String product="";
-        switch (productID) {
-            case 0 -> product = "flour";
-            case 1 -> product = "olive oil";
-            default -> product = "tomatoes";
-        }
-        if (this.warehouse.containsKey(productID)) {
-            if (this.warehouse.get(productID) >= amount) {
-                int old_amount = this.warehouse.get(productID);
-                this.warehouse.remove(productID);
+    synchronized int sellProducts(String product, int amount) {
+        if (this.warehouse.containsKey(product)) {
+            if (this.warehouse.get(product) >= amount) {
+                int old_amount = this.warehouse.get(product);
+                this.warehouse.remove(product);
                 if(old_amount > amount) {
-                    this.warehouse.put(productID, old_amount - amount);
+                    this.warehouse.put(product, old_amount - amount);
                 }
                 this.amount_in_store -= amount;
-                System.out.println(amount + " pieces of " + product + " has been sold.");
-                System.out.println("There is " + this.amount_in_store + " products in the warehouse.");
+                //System.out.println(amount + " pieces of " + product + " has been sold.");
+                //System.out.println("There is " + this.amount_in_store + " products in the warehouse.");
+                synchronized (lock){
+                    lock.notifyAll();
+                }
                 return amount;
             } else {
-                int old_amount = this.warehouse.get(productID);
-                this.warehouse.remove(productID);
-                System.out.println(old_amount + " pieces of " + product +" has been sold. There is no " + product + " left.");
-                System.out.println("There is " + this.amount_in_store + " products in the warehouse.");
+                int old_amount = this.warehouse.get(product);
+                this.warehouse.remove(product);
+                //System.out.println(old_amount + " pieces of " + product +" has been sold. There is no " + product + " left.");
+                //System.out.println("There is " + this.amount_in_store + " products in the warehouse.");
                 this.amount_in_store -= old_amount;
+                synchronized (lock){
+                    lock.notifyAll();
+                }
                 return old_amount;
             }
         } else {
-            System.out.println("There is no " + product + " in the warehouse.");
+            //System.out.println("There is no " + product + " in the warehouse.");
             return 0;
         }
     }
