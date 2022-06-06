@@ -47,7 +47,7 @@ public class Warehouse extends Thread {
             this.warehouse.put(product, new_amount);
             //System.out.println("Only " + amount + " out of " + received_amount + " pieces of " + product +
             //        " has been added to warehouse due to lack of space.");
-            //printWarehouse();
+            // printWarehouse();
             synchronized (lock){
                 lock.notifyAll();
             }
